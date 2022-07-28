@@ -1,17 +1,25 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteComment } from '../redux/action';
 
 const SingleCommentComponent = (props) => {
     const [comment, setComment] = useState('');
-    const { input } = props;
+    const { input, id } = props;
+    const dispatch = useDispatch();
+
     useEffect(() => {
         if (input) {
             setComment(input)
         }
     }, [input])
 
+    const deleteItem = () => {
+        dispatch(deleteComment(id))
+    }
+    
     return (
         <div className='comments-item'>
-            <div className='comments-item-delete'>x</div>
+            <div onClick={deleteItem} className='comments-item-delete'>x</div>
             <input
                 onChange={(e) => setComment(e.target.value)}
                 value={comment}
