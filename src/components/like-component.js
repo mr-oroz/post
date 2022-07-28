@@ -1,14 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { icrement } from '../redux/action';
+import { icrement, decrement } from '../redux/action';
+
 const LikeComponent = () => {
     const dispatch = useDispatch();
-    const state = useSelector(state => state)
+    const state = useSelector(state => state.LikeReducer.likes)
     return <div className="button-controls">
         <button
             onClick={() => dispatch(icrement())}>
-            ♥ {state.likes}
+            ♥ {state}
         </button>
-        <button >👎</button>
+        <button onClick={() => dispatch(decrement())}>👎</button>
     </div>
 }
 
