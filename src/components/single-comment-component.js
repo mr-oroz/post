@@ -3,15 +3,16 @@ import { useDispatch } from 'react-redux';
 import { deleteComment } from '../redux/action';
 
 const SingleCommentComponent = (props) => {
+    console.log(props)
     const [comment, setComment] = useState('');
-    const { input, id } = props;
+    const { title, id } = props;
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (input) {
-            setComment(input)
+        if (title) {
+            setComment(title)
         }
-    }, [input])
+    }, [title])
 
     const deleteItem = () => {
         dispatch(deleteComment(id))

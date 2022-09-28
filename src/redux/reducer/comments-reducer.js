@@ -1,25 +1,69 @@
-import { ADD_COMMENTS, DELETE_COMMENT } from "../types";
+import {
+    ADD_COMMENTS,
+    DELETE_COMMENT,
+    GET_POST_COMMENT,
+    SHOW_LOADING,
+    HIDE_LOADING,
+    SHOW_ERROR,
+    CLEAR_ERROR
+} from "../types";
 
 const initialState = {
-    comments: []
+    comments: [],
+    loading: false,
+    error: null
 }
 
 export const CommentsReducer = (state = initialState, action) => {
     console.log(action)
-    switch(action.type) {
-        case ADD_COMMENTS: 
+    switch (action.type) {
+        case ADD_COMMENTS: {
+            const { title, id } = action.payload
             return {
                 ...state,
-                comments: [...state.comments, action.payload]
+                comments: [...state.comments, { title, id }]
             }
-        case DELETE_COMMENT: 
-            const {id} = action.payload
+        }
+        case DELETE_COMMENT:
+            const { id } = action.payload
             const newArr = state.comments.filter(elem => elem.id !== id);
             return {
                 ...state,
                 comments: newArr
             }
-        default: 
+        case GET_POST_COMMENT: {
+            const { data } = action.payload
+            return {
+                ...state,
+                comments: data
+            }
+        }
+        case SHOW_LOADING: {
+            return {
+                ...state,
+                loading: true
+            }
+        }
+        case HIDE_LOADING: {
+            return {
+                ...state,
+                loading: false
+            }
+        }
+        case SHOW_ERROR: {
+            const { error } = action
+            return {
+                ...state,
+                error
+            }
+        }
+        case CLEAR_ERROR: {
+            return {
+                ...state,
+                error: null
+            }
+        }
+        default:
             return state
     }
 }
